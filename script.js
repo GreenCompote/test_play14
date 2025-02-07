@@ -7,6 +7,23 @@ let direction = 'RIGHT'; // Начальное направление движе
 let food = { x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box }; // Случайное положение еды
 let score = 0; // Очки
 
+// Фиксируем игровое поле
+canvas.style.position = 'fixed';
+canvas.style.top = '50%';
+canvas.style.left = '50%';
+canvas.style.transform = 'translate(-50%, -50%)';
+
+// Создаём элемент для отображения счёта
+const scoreDisplay = document.createElement('div');
+scoreDisplay.style.position = 'fixed';
+scoreDisplay.style.top = '10px';
+scoreDisplay.style.left = '50%';
+scoreDisplay.style.transform = 'translateX(-50%)';
+scoreDisplay.style.color = 'white';
+scoreDisplay.style.fontSize = '20px';
+scoreDisplay.style.fontFamily = 'Arial, sans-serif';
+document.body.appendChild(scoreDisplay);
+
 document.addEventListener('keydown', changeDirection);
 function changeDirection(event) {
     // Обрабатываем нажатие клавиш, запрещая движение в противоположную сторону
@@ -19,6 +36,9 @@ function changeDirection(event) {
 function drawGame() {
     ctx.fillStyle = 'black'; // Задний фон
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Отображаем счёт
+    scoreDisplay.textContent = `Очки: ${score}`;
     
     // Отрисовка змейки
     for (let i = 0; i < snake.length; i++) {
