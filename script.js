@@ -11,7 +11,12 @@ const foodEmojis = ['🍎', '🍌', '🍇', '🍓', '🍊', '🍉']; // Набо
 function getRandomFood() {
     return foodEmojis[Math.floor(Math.random() * foodEmojis.length)];
 }
-let food = { x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box, emoji: getRandomFood() }; // Случайное положение еды с эмодзи
+
+let food = { 
+    x: Math.floor(Math.random() * 20) * box, 
+    y: Math.floor(Math.random() * 20) * box, 
+    emoji: getRandomFood() 
+};
 // Фиксируем игровое поле
 canvas.style.position = 'fixed';
 canvas.style.top = '50%';
