@@ -4,7 +4,6 @@ const ctx = canvas.getContext('2d'); // Контекст рисования
 const box = 20; // Размер одного блока змейки
 let snake = [{ x: 10 * box, y: 10 * box }]; // Начальная позиция змейки
 let direction = 'RIGHT'; // Начальное направление движения
-let food = { x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box, emoji: getRandomFood() }; // Случайное положение еды с эмодзи
 let score = 0; // Очки
 
 const foodEmojis = ['🍎', '🍌', '🍇', '🍓', '🍊', '🍉']; // Набор фруктов
@@ -12,7 +11,7 @@ const foodEmojis = ['🍎', '🍌', '🍇', '🍓', '🍊', '🍉']; // Набо
 function getRandomFood() {
     return foodEmojis[Math.floor(Math.random() * foodEmojis.length)];
 }
-
+let food = { x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box, emoji: getRandomFood() }; // Случайное положение еды с эмодзи
 // Фиксируем игровое поле
 canvas.style.position = 'fixed';
 canvas.style.top = '50%';
