@@ -31,6 +31,7 @@ canvas.style.position = 'fixed';
 canvas.style.top = '50%';
 canvas.style.left = '50%';
 canvas.style.transform = 'translate(-50%, -50%)';
+canvas.style.background = '#f5e6e8'; // Нейтральный фон
 
 // Создаём элемент для отображения счёта
 const scoreDisplay = document.createElement('div');
@@ -58,12 +59,43 @@ welcomeScreen.style.color = 'white';
 welcomeScreen.style.fontSize = '20px';
 welcomeScreen.style.fontFamily = 'Arial, sans-serif';
 welcomeScreen.style.textAlign = 'center';
-welcomeScreen.innerHTML = '<div>Привет. Это увлекательная интерактивная открытка только для тебя. Чтобы получить послание, нужно пройти испытание и набрать 15 очков в этой странной игре, собранной на коленке (за что я извиняюсь).<br><br><button id="startGame" style="padding: 10px 20px; font-size: 18px; cursor: pointer;">Начать</button></div>';
+welcomeScreen.innerHTML = '<div>❤️ Привет! Это увлекательная интерактивная открытка только для тебя. Чтобы получить послание, нужно пройти испытание и набрать 15 очков в этой странной игре, собранной на коленке (за что я извиняюсь). ❤️<br><br><button id="startGame" style="padding: 10px 20px; font-size: 18px; cursor: pointer;">Начать</button></div>';
 document.body.appendChild(welcomeScreen);
 
 document.getElementById('startGame').addEventListener('click', () => {
     welcomeScreen.style.display = 'none';
     drawGame();
+});
+
+// Сенсорное управление
+const controlPanel = document.createElement('div');
+controlPanel.style.position = 'fixed';
+controlPanel.style.bottom = '20px';
+controlPanel.style.left = '50%';
+controlPanel.style.transform = 'translateX(-50%)';
+controlPanel.style.display = 'grid';
+controlPanel.style.gridTemplateColumns = 'repeat(3, 1fr)';
+controlPanel.style.gap = '15px';
+document.body.appendChild(controlPanel);
+
+const buttons = {
+    up: '⬆️',
+    down: '⬇️',
+    left: '⬅️',
+    right: '➡️'
+};
+
+Object.entries(buttons).forEach(([dir, emoji]) => {
+    const btn = document.createElement('button');
+    btn.textContent = emoji;
+    btn.style.fontSize = '50px'; // Увеличен размер кнопок
+    btn.style.padding = '25px';
+    btn.style.cursor = 'pointer';
+    btn.style.width = '90px';
+    btn.style.height = '90px';
+    btn.style.borderRadius = '20px';
+    btn.onclick = () => changeDirection({ key: dir.toUpperCase() });
+    controlPanel.appendChild(btn);
 });
 
 document.addEventListener('keydown', changeDirection);
@@ -74,51 +106,22 @@ function changeDirection(event) {
     else if (event.keyCode == 40 && direction !== 'UP') direction = 'DOWN';
 }
 
-function drawGame() {
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    scoreDisplay.textContent = `Очки: ${score}`;
-    
-    for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = (i === 0) ? 'green' : 'lime';
-        ctx.fillRect(snake[i].x, snake[i].y, box, box);
-    }
-    
-    ctx.font = '20px Arial';
-    ctx.fillText(food.emoji, food.x + 5, food.y + 15);
-    
-    let snakeX = snake[0].x;
-    let snakeY = snake[0].y;
-    
-    if (direction == 'LEFT') snakeX -= box;
-    if (direction == 'UP') snakeY -= box;
-    if (direction == 'RIGHT') snakeX += box;
-    if (direction == 'DOWN') snakeY += box;
-    
-    if (snakeX == food.x && snakeY == food.y) {
-        score++;
-        food = generateFood();
-    } else {
-        snake.pop();
-    }
-    
-    if (snakeX < 0) snakeX = canvas.width - box;
-    if (snakeX >= canvas.width) snakeX = 0;
-    if (snakeY < 0) snakeY = canvas.height - box;
-    if (snakeY >= canvas.height) snakeY = 0;
-    
-    let newHead = { x: snakeX, y: snakeY };
-    
-    if (score >= 15) {
-        showBanner();
-        return;
-    }
-    
-    snake.unshift(newHead);
-    setTimeout(drawGame, 100);
-}
-
-function showBanner() {
-    document.body.innerHTML = '<div style="position:fixed; top:0; left:0; width:100%; height:100%; background:pink; display:flex; justify-content:center; align-items:center; font-size:24px;">Поздравляю с 14 февраля! 💖</div>';
+// Завершающий баннер при наборе 15 очков
+function showVictoryBanner() {
+    const victoryBanner = document.createElement('div');
+    victoryBanner.style.position = 'fixed';
+    victoryBanner.style.top = '0';
+    victoryBanner.style.left = '0';
+    victoryBanner.style.width = '100%';
+    victoryBanner.style.height = '100%';
+    victoryBanner.style.background = 'rgba(0, 0, 0, 0.8)';
+    victoryBanner.style.display = 'flex';
+    victoryBanner.style.justifyContent = 'center';
+    victoryBanner.style.alignItems = 'center';
+    victoryBanner.style.color = 'white';
+    victoryBanner.style.fontSize = '24px';
+    victoryBanner.style.fontFamily = 'Arial, sans-serif';
+    victoryBanner.style.textAlign = 'center';
+    victoryBanner.innerHTML = '<div>💖 Поздравляю! 🎉 Ты справился с испытанием! 💖<br>Пусть этот день будет полон радости, любви и теплых моментов! ❤️💌</div>';
+    document.body.appendChild(victoryBanner);
 }
