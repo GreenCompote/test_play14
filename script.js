@@ -4,7 +4,6 @@ const ctx = canvas.getContext('2d'); // Контекст рисования
 const box = 20; // Размер одного блока змейки
 let snake = [{ x: 10 * box, y: 10 * box }]; // Начальная позиция змейки
 let direction = 'RIGHT'; // Начальное направление движения
-let food = generateFood(); // Генерация еды
 let score = 0; // Очки
 
 const foodEmojis = ['🍎', '🍌', '🍇', '🍓', '🍊', '🍉']; // Набор фруктов
@@ -24,6 +23,8 @@ function generateFood() {
     } while (snake.some(segment => segment.x === newFood.x && segment.y === newFood.y)); // Проверяем, не находится ли еда внутри змейки
     return newFood;
 }
+
+let food = generateFood(); // Генерация еды
 
 // Фиксируем игровое поле
 canvas.style.position = 'fixed';
