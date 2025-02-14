@@ -74,6 +74,34 @@ function changeDirection(event) {
 }
 document.addEventListener('keydown', changeDirection);
 
+// Экран с приветствием
+const welcomeScreen = document.createElement('div');
+welcomeScreen.style.position = 'fixed';
+welcomeScreen.style.top = '0';
+welcomeScreen.style.left = '0';
+welcomeScreen.style.width = '100%';
+welcomeScreen.style.height = '100%';
+welcomeScreen.style.background = 'lightblue';
+welcomeScreen.style.display = 'flex';
+welcomeScreen.style.flexDirection = 'column';
+welcomeScreen.style.justifyContent = 'center';
+welcomeScreen.style.alignItems = 'center';
+welcomeScreen.style.textAlign = 'center';
+welcomeScreen.style.fontSize = '24px';
+welcomeScreen.style.color = 'white';
+welcomeScreen.innerHTML = `
+    Привет. От меня никогда не будет банальных открыток. <br>
+    Придется немного пострадать, чтобы набрать 15 очков в этой чудесной и кривой игре.
+    <br><br>
+    <button id="startBtn" style="padding: 10px 20px; font-size: 18px; background-color: #fff; color: #000; border: none; border-radius: 5px; cursor: pointer;">Начать игру</button>
+`;
+document.body.appendChild(welcomeScreen);
+
+document.getElementById('startBtn').addEventListener('click', function () {
+    welcomeScreen.style.display = 'none'; // Скрыть приветственный экран
+    drawGame(); // Начать игру
+});
+
 function drawGame() {
     ctx.fillStyle = 'black'; // Задний фон
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -125,8 +153,34 @@ function drawGame() {
     setTimeout(drawGame, 100);
 }
 
-drawGame();
-
 function showBanner() {
-    document.body.innerHTML = '<div style="position:fixed; top:0; left:0; width:100%; height:100%; background:pink; display:flex; justify-content:center; align-items:center; font-size:24px;">Поздравляю с 14 февраля! 💖</div>';
+    const banner = document.createElement('div');
+    banner.style.position = 'fixed';
+    banner.style.top = '0';
+    banner.style.left = '0';
+    banner.style.width = '100%';
+    banner.style.height = '100%';
+    banner.style.background = 'pink';
+    banner.style.display = 'flex';
+    banner.style.justifyContent = 'center';
+    banner.style.alignItems = 'center';
+    banner.style.fontSize = '25px';
+    banner.style.color = 'white';
+    banner.innerHTML = `
+        Поздравляю с 14 февраля! 💖<br>
+        Я люблю тебя! Спасибо что ты есть в моей жизни!<br>
+        Далее можешь написать в тележку исполнителю.<br>
+        <br><br>
+        <button id="restartBtn" style="padding: 10px 20px; font-size: 18px; background-color: #fff; color: #000; border: none; border-radius: 5px; cursor: pointer;">Перезапустить игру</button>
+    `;
+    document.body.appendChild(banner);
+
+    document.getElementById('restartBtn').addEventListener('click', function () {
+        banner.style.display = 'none'; // Скрыть баннер
+        score = 0; // Сбросить очки
+        snake = [{ x: 10 * box, y: 10 * box }]; // Перезапустить змейку
+        food = { x: Math.floor(Math.random() * 20) * box, y: Math.floor(Math.random() * 20) * box }; // Новая еда
+        direction = 'RIGHT'; // Начальное направление
+        drawGame(); // Начать игру заново
+    });
 }
