@@ -1,7 +1,10 @@
+const box = 25;
+const gridSize = 18; // Уменьшено с 20 до 19
+const canvasSize = gridSize * box;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const box = 25;
-const canvasSize = 20 * box;
+canvas.width = canvasSize;
+canvas.height = canvasSize;
 let snake, direction, food, score, gameRunning = false;
 
 // Устанавливаем размеры игрового поля
