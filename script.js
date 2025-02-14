@@ -1,5 +1,5 @@
 const box = 25;
-const gridSize = 18; // Уменьшено с 20 до 19
+const gridSize = 16; // Уменьшено с 20 до 16
 const canvasSize = gridSize * box;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
